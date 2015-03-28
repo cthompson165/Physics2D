@@ -1,0 +1,5 @@
+C:\Projects\TestProjects\windows\Physics2D\bin\Debug\Physics2D.dll
+C:\Projects\TestProjects\windows\Physics2D\bin\Debug\Physics2D.pdb
+C:\Projects\TestProjects\windows\Physics2D\obj\Debug\Physics2D.dll
+C:\Projects\TestProjects\windows\Physics2D\obj\Debug\Physics2D.pdb
+C:\Projects\TestProjects\windows\Physics2D\obj\Debug\Physics2D.csprojResolveAssemblyReference.cache
