@@ -16,13 +16,12 @@ namespace Physics2D.PhysicalObject
  * Stationary objects have infinite mass.
  */
 public abstract class StationaryObject2D : PhysicalObject2D
-    {               
-    private static PhysicsState physicsState = PhysicsState.getInstance();
+    {
     private Double2D velocity = new Double2D(0, 0);
         
     public StationaryObject2D()
         {
-        physicsState.setMassInverse(0, 0, index);
+            m_State.setMassInverse(0, 0);
         }
 
     /** Set the shape of the object which determines how it is displayed 
@@ -31,7 +30,7 @@ public abstract class StationaryObject2D : PhysicalObject2D
     public void setShape(Shape shape)
         {
         this.shape = shape;
-        this.shape.setIndex(this.index);
+        this.shape.setIndex(this.getIndex());
         this.shape.calcMaxDistances(false);
         }
         

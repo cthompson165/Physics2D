@@ -108,11 +108,11 @@ public class Collision : ImpulseConstraint
                 
         // Answer and intersection matrices have all zeros, so do not need to be
         // set
-        int globalPosStart1 = obj1.index * 3;
+        int globalPosStart1 = obj1.getIndex() * 3;
         collisionMatrix.setBlock(curConstraintRow, globalPosStart1, subCollisionRowsMatrix1.vals);
         collisionMatrix.setBlock(globalPosStart1, curConstraintRow, subCollisionColsMatrix1.vals);
-                
-        int globalPosStart2 = obj2.index * 3;
+
+        int globalPosStart2 = obj2.getIndex() * 3;
         collisionMatrix.setBlock(curConstraintRow, globalPosStart2, subCollisionRowsMatrix2.vals);
         collisionMatrix.setBlock(globalPosStart2, curConstraintRow, subCollisionColsMatrix2.vals);
                 

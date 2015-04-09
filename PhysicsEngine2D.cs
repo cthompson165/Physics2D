@@ -26,6 +26,8 @@ public class PhysicsEngine2D
     private PhysicsState physicsState;
     private ConstraintEngine objCE;
     private ForceEngine objFE;
+
+    private List<object> m_ObjectsToUnregister = new List<object>();
                 
     public PhysicsEngine2D()
         {
@@ -43,44 +45,93 @@ public class PhysicsEngine2D
         {
         this.objODE = solver;
         }
-        
+
     public void step()
-        {
+    {
         physicsState.backupCurrentPosition();
-                
+
         // Handle collisions
         Bag contactList = objCDE.getCollisions();
         Bag collidingList = new Bag();
-                
+
         // Notify each object involved in collisions of the collision
         for (int i = 0; i < contactList.size(); i++)
-            {
+        {
             CollisionPair pair = (CollisionPair)contactList.objs[i];
-                        
+
             int colType1 = pair.c1.handleCollision(pair.c2, pair.getColPoint1());
             int colType2 = pair.c2.handleCollision(pair.c1, pair.getColPoint2());
-                        
+
             if (colType1 != 0 && colType2 != 0)
-                {
+            {
                 if (colType1 == 2 || colType2 == 2)
-                    pair.setSticky();       
+                    pair.setSticky();
                 collidingList.add(pair);
+            }
+        }
+        objCE.addCollisionResponses(collidingList);
+
+        // Handle resting contacts and other forces/constraints
+        physicsState.saveLastState();
+        objODE.solve(1);
+
+        if (m_ObjectsToUnregister.Count > 0)
+        {
+            physicsState.CacheState();
+            foreach (object obj in m_ObjectsToUnregister)
+            {
+                doUnRegister(obj);
+            }
+
+            physicsState.reinit();
+            objCDE.clear();
+
+            for (int i = 0; i < physicsState.physObjs.numObjs; i++)
+            {
+                var po = physicsState.physObjs.objs[i] as PhysicalObject2D;
+                if (po != null)
+                {
+                    objCDE.register(po);
                 }
             }
-        objCE.addCollisionResponses(collidingList);
-                
-        // Handle resting contacts and other forces/constraints
-        physicsState.saveLastState(); 
-        objODE.solve(1);
+
+            m_ObjectsToUnregister.Clear();
         }
+    }
+
+    private void doUnRegister(Object obj)
+    {
+        if (obj is ImpulseConstraint)
+            objCE.unRegisterImpulseConstraint((ImpulseConstraint)obj);
+
+        if (obj is ForceConstraint)
+            objCE.unRegisterForceConstraint((ForceConstraint)obj);
+
+        if (obj is ForceGenerator)
+            objFE.unRegisterForceGenerator((ForceGenerator)obj);
+
+        if (obj is MobileObject2D)
+            objFE.unRegisterMobileObject((MobileObject2D)obj);
+
+        var po = obj as PhysicalObject2D;
+        if (po != null)
+        {
+            physicsState.removeBody(po);
+        }        
+    }
                 
     /** Registers a physical object, force generator, or constraint
      * with the physics engine.
      */
     public void register(Object obj)
         {
-        if (obj is PhysicalObject2D)
-            objCDE.register((PhysicalObject2D)obj);
+            var po = obj as PhysicalObject2D;
+            if (po != null)
+            {
+                physicsState.addBody(po);
+                po.Registered();
+                objCDE.register(po);
+            }
 
         if (obj is MobileObject2D)
             objFE.registerMobileObject((MobileObject2D)obj);
@@ -106,11 +157,7 @@ public class PhysicsEngine2D
      */
     public void unRegister(Object obj)
         {
-            if (obj is ForceConstraint)
-                objCE.unRegisterForceConstraint((ForceConstraint)obj);
-                
-            if (obj is ImpulseConstraint)
-                objCE.unRegisterImpulseConstraint((ImpulseConstraint)obj);
+            m_ObjectsToUnregister.Add(obj);
              
         }
     }

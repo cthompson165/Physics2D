@@ -64,6 +64,11 @@ public class ForceEngine
         {
         this.forceGenerators.add(forceGenerator);
         }
+
+    public void unRegisterForceGenerator(ForceGenerator forceGenerator)
+    {
+        this.forceGenerators.remove(forceGenerator);
+    }
         
     /** Registers a mobile object with the force generator. All mobile objects
      * to whom force fields or friction should be applied need to be registered 
@@ -72,7 +77,12 @@ public class ForceEngine
     public void registerMobileObject(MobileObject2D objMO)
         {
         mobileObjs.add(objMO);
-        }       
+        }
+
+    public void unRegisterMobileObject(MobileObject2D objMO)
+    {
+        mobileObjs.remove(objMO);
+    }    
         
     /** Adds a force that is applied to every object at 
      * every timestep. An example of a force field is gravity.

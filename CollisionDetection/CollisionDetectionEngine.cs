@@ -39,6 +39,11 @@ namespace Physics2D.CollisionDetection
         {
         objBPCollision.register(objCol);
         }
+
+    public void clear()
+    {
+        objBPCollision.clear();
+    }
     }
 
 }

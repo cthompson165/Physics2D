@@ -17,6 +17,11 @@ public class Angle
     public const double twoPI = 2 * Math.PI;
     public const double halfPI = Math.PI / 2;
 
+    public Angle()
+    {
+        
+    }
+
     public Angle(double radians)
         {
         this.radians = GetNormalizedRadians(radians);

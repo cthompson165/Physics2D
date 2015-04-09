@@ -28,7 +28,6 @@ namespace Physics2D
 public class PhysicsState 
     {
     static private PhysicsState instance = null;
-    //private Hashtable mapping;
     public Bag physObjs;
                 
     private DiagonalMatrix massInverseMatrix;
@@ -347,16 +346,16 @@ public class PhysicsState
      */ 
     public void addBody(PhysicalObject2D mobj)
         {
-        mobj.index = physObjs.numObjs;
+        mobj.setIndex(physObjs.numObjs);
         physObjs.add(mobj);
                 
-        int threeNum = 3 * (mobj.index + 1);
+        int threeNum = 3 * (mobj.getIndex() + 1);
         DiagonalMatrix newMassInverseMatrix = new DiagonalMatrix(threeNum);
                 
         Vector newStateVector = new Vector(threeNum * 2);
         Vector newExternalForcesVector = new Vector(threeNum);
                 
-        if (mobj.index > 0)
+        if (mobj.getIndex() > 0)
             {
             for (int i = 0; i < massInverseMatrix.m; i++)
                 {
@@ -373,7 +372,119 @@ public class PhysicsState
         lastStateVector = stateVector.copy();
         savedStateVector = stateVector.copy();
         tmpStateVector = stateVector.copy();
+
+
+
+        }
+
+
+    public void CacheState()
+    {
+        for (int i = 0; i < physObjs.numObjs; i++)
+        {
+            ((PhysicalObject2D)physObjs.objs[i]).CacheState();
         }
     }
 
+    private List<PhysicalObject2D> m_ObjectsToRemove = new List<PhysicalObject2D>();
+    public void removeBody(PhysicalObject2D mobj)
+    {
+        m_ObjectsToRemove.Add(mobj);
+    }
+
+    /** TODO - we should be able to do this  without wiping everything out
+     */
+    public void reinit()
+    {
+        var indicesToRemove = new List<int>();
+        foreach (PhysicalObject2D mobj in m_ObjectsToRemove)
+        {
+            mobj.CacheState();
+            indicesToRemove.Add(mobj.getIndex());
+        }
+
+        RemoveBodies(indicesToRemove);
+
+        // TODO - do this before reindexing?
+        foreach (PhysicalObject2D mobj in m_ObjectsToRemove)
+        {
+            physObjs.removeAt(mobj.getIndex()); // todo - do this in one pass
+            mobj.Unregistered();
+        }
+
+        for (int i = 0; i < physObjs.numObjs; i++)
+        {
+            ((PhysicalObject2D)physObjs.objs[i]).setIndex(i);
+        }
+
+        m_ObjectsToRemove.Clear();
+    }
+
+    private void RemoveBodies(List<int> indicesToRemove)
+    {
+        if (indicesToRemove != null && indicesToRemove.Count > 0)
+        {
+            int newCount = physObjs.numObjs - indicesToRemove.Count;
+            int new3Count = newCount * 3;
+            int old3Count = physObjs.numObjs * 3;
+            int new6Count = new3Count * 2;
+
+            double[] newVals = new double[new3Count];
+
+            var newStateVector = new Vector(new6Count);
+            var newExternalForcesVector = new Vector(new3Count);
+            var newLastStateVector = new Vector(new6Count);
+            var newSavedStateVector = new Vector(new6Count);
+            var newTmpStateVector = new Vector(new6Count);
+            
+            indicesToRemove.Sort();
+
+            int newValsIndex = 0;
+            int newVelValsIndex = new3Count;
+            int currentIndex = indicesToRemove.First();
+            int currentIndex3 = currentIndex * 3;
+            indicesToRemove.RemoveAt(0);
+
+            int velI = old3Count;
+
+            for (int i = 0; i < old3Count; i++)
+            {
+                if (i == currentIndex3)
+                {
+                    i += 2;
+                    velI += 2;
+
+                    if (indicesToRemove.Count > 0)
+                    {
+                        currentIndex = indicesToRemove.First();
+                        currentIndex3 = currentIndex * 3;
+                        indicesToRemove.RemoveAt(0);
+                    }
+                }
+                else
+                {
+                    newVals[newValsIndex] = massInverseMatrix.vals[i];
+                    newStateVector.vals[newValsIndex] = stateVector.vals[i];
+                    newStateVector.vals[newVelValsIndex] = stateVector.vals[velI];
+                    newExternalForcesVector.vals[newValsIndex] = externalForcesVector.vals[i];
+                    newLastStateVector.vals[newValsIndex] = lastStateVector.vals[i];
+                    newSavedStateVector.vals[newValsIndex] = savedStateVector.vals[i];
+                    newTmpStateVector.vals[newValsIndex] = tmpStateVector.vals[i];
+
+                    newValsIndex++;
+                    newVelValsIndex++;
+                }
+
+                velI++;
+            }
+            massInverseMatrix = new DiagonalMatrix(newVals);
+
+            stateVector = newStateVector;
+            externalForcesVector = newExternalForcesVector;
+            lastStateVector = newLastStateVector;
+            savedStateVector = newSavedStateVector;
+            tmpStateVector = newTmpStateVector;
+        }
+    }
+    }
 }

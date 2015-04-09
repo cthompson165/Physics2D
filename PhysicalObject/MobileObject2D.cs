@@ -24,7 +24,7 @@ public abstract class MobileObject2D : PhysicalObject2D
     private const double zeroVelocity = 0.01;
     private double normalForce;
     private const double gravity = .1;
-        
+
     public MobileObject2D()
         {
         this.setPose(new Double2D(0,0), new Angle(0));
@@ -54,7 +54,7 @@ public abstract class MobileObject2D : PhysicalObject2D
                 
         // Precompute inverses since we need them a lot in collision response
         double massInverse = 1 / mass;
-        physicsState.setMassInverse(massInverse, massMomentOfInertiaInverse, index);
+        m_State.setMassInverse(massInverse, massMomentOfInertiaInverse);
                 
         this.mass = mass;
         normalForce = mass * gravity;
@@ -63,13 +63,13 @@ public abstract class MobileObject2D : PhysicalObject2D
     /** Apply a force to the MobileObject */
     public virtual void addForce(Double2D force)
         {
-        physicsState.addExternalForce(force, this.index);
+            m_State.addForce(force);
         }
         
     /** Apply a torque to the MobileObject */
     public virtual void addTorque(double torque)
         {
-        physicsState.addExternalTorque(torque, this.index);
+            m_State.addTorque(torque);
         }
         
     /** Positive value representing the coefficient of friction of the
@@ -111,7 +111,7 @@ public abstract class MobileObject2D : PhysicalObject2D
     public void setShape(Shape shape, double mass)
         {
         this.shape = shape;
-        this.shape.setIndex(this.index);
+        this.shape.setIndex(this.getIndex());
         this.shape.calcMaxDistances(true);
         setMass(mass);
         }
@@ -121,31 +121,32 @@ public abstract class MobileObject2D : PhysicalObject2D
      */
     public override void updatePose(double percent)
         {
-        this.setPose(this.getPosition().add(physicsState.getLastVelocity(this.index).multiply(percent)), this.getOrientation().add(physicsState.getLastAngularVelocity(this.index)));
+            m_State.updatePose(percent);
         }
         
     /** Move the object back to its previous location */
     public override void resetLastPose()
         {
-        this.setPose(physicsState.getLastPosition(this.index), physicsState.getLastOrientation(this.index));
+            m_State.resetLastPose();
         }
         
     /** Restores an object to its current location */
     public override void restorePose()
         {
-        this.setPose(physicsState.getSavedPosition(this.index), physicsState.getSavedOrientation(this.index));
+            m_State.restorePose();
         }
 
     /** Returns the object's velocity */
     public override Double2D getVelocity()
         {
-        return physicsState.getVelocity(index);
+            return m_State.getVelocity();
         }
         
     /** Updates the object's velocity */
-    public void setVelocity(Double2D velocity)
+    public virtual void setVelocity(Double2D velocity)
         {
-        physicsState.setVelocity(velocity, index);
+            m_State.setVelocity(velocity);
+            
         }
         
     /** How fast the object is rotating in radians per second.
@@ -154,7 +155,7 @@ public abstract class MobileObject2D : PhysicalObject2D
      */
     public override double getAngularVelocity()
         {
-        return physicsState.getAngularVelocity(index);
+        return m_State.getAngularVelocity();
         }
         
     /** How fast the object is rotating in radians per second.
@@ -162,16 +163,16 @@ public abstract class MobileObject2D : PhysicalObject2D
      * counter clockwise
      */
     public void setAngularVelocity(double angularVelocity)
-        {
-        physicsState.setAngularVelocity(angularVelocity, index);
-        }
+    {
+        m_State.setAngularVelocity(angularVelocity);
+    }
         
     /** Returns a vector that represents a combination of 
      * all the forces applied to it
      */
     public Double2D getForceAccumulator()
         {
-        return physicsState.getExternalForce(index);
+            return m_State.getForceAccumulator();
         }
         
     /** Returns a number that represents a combination of 
@@ -179,19 +180,19 @@ public abstract class MobileObject2D : PhysicalObject2D
      */
     public double getTorqueAccumulator()
         {
-        return physicsState.getExternalTorque(index);
+            return m_State.getTorqueAccumulator();
         }
 
     /** 1 / mass. Used in collision response */
     public override double getMassInverse()
         {
-        return physicsState.getMassInverse(index);
+            return m_State.getMassInverse();
         }
         
     /** 1 / massMomentOfInertia. Used in collision response */
     public override double getMassMomentOfInertiaInverse()
         {
-        return physicsState.getMassMomentOfInertiaInverse(index);
+        return m_State.getMassMomentOfInertiaInverse();
         }
         
     /** Calculates and adds the static and dynamic friction forces on the object

@@ -12,28 +12,48 @@ namespace Physics2D.PhysicalObject
     public abstract class PhysicalObject2D
     {
     // Data members common to all physical objects
-    public int index;
     protected Shape shape;
-    protected PhysicsState physicsState = PhysicsState.getInstance();
+    protected PhysicalObjectState m_State = new PhysicalObjectState();
     protected double coefficientOfRestitution; // elasticity
-        
+ 
     /** Returns the object's index, which uniquely identifies the object
      * and determines where its state variables are kept in the state
      * vectors and matrices.
      */
     public int getIndex()
         {
-        return index;
+            return m_State.index;
         }
         
     public void setIndex(int index)
         {
-        this.index = index;
+            this.shape.setIndex(index);
+            m_State.index = index;
         }
+
+    public void Registered()
+    {
+        m_State.Registered();
+    }
+
+    public void Unregistered()
+    {
+        m_State.Unregistered();
+    }
+
+    public void RestoreState()
+    {
+        m_State.RestoreState();
+    }
+
+    public void CacheState()
+    {
+        m_State.CacheState();
+    }
         
     public PhysicalObject2D()
         {
-        physicsState.addBody(this);
+        
         }
         
     /** Returns an object's associated shape
@@ -47,14 +67,14 @@ namespace Physics2D.PhysicalObject
      */
     public Double2D getPosition()
         {
-        return physicsState.getPosition(index);
+            return m_State.getPosition();
         }
         
     /** Returns an object's current orientation 
      */
     public Angle getOrientation()
         {
-        return physicsState.getOrientation(index);
+            return m_State.getOrientation();
         }
         
     /** Represents the elasticity of an object
@@ -86,8 +106,7 @@ namespace Physics2D.PhysicalObject
     /** Set the pose of the object */
     public void setPose(Double2D position, Angle orientation)
         {
-        physicsState.setPosition(position, index);
-        physicsState.setOrientation(orientation, index);
+            m_State.setPose(position, orientation);
         }
         
     // Member functions that vary between mobile and stationary objects

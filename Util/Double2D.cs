@@ -8,6 +8,10 @@ namespace Physics2D.Util
 {
     public class Double2D
     {
+        public Double2D()
+        {
+        }
+
         public Double2D(double x, double y)
         {
             this.x = x;

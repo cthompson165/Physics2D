@@ -43,24 +43,29 @@ namespace Physics2D.Util
 
         public void remove(object value)
         {
-            bool found = false;
+            int index = -1;
             for (int i = 0; i < numObjs; i++)
             {
                 if (objs[i] == value)
                 {
-                    found = true;
-                    continue;
-                }
-
-                if (found)
-                {
-                    objs[i - 1] = objs[i];
+                    index = i; 
+                    break;
                 }
             }
-
-            if (found)
-                numObjs--;
+            if (index > -1)
+            {
+                removeAt(index);
+            }
         }
 
+        public void removeAt(int index)
+        {
+            for (int i = index; i < numObjs - 1; i++)
+            {
+                objs[i] = objs[i + 1];
+            }
+
+            numObjs--;
+        }
     }
 }

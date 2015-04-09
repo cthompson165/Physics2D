@@ -147,7 +147,18 @@ class BroadPhaseCollision2D
         insertionSort(0);
         insertionSort(1);
         }
-        
+
+    // TODO - we can probably do this without wiping out the whole thing.
+    public void clear()
+    {
+        arOS = new Bag();
+
+        arDimEPBags[0] = new Bag();
+        arDimEPBags[1] = new Bag();
+
+        activeList = new HashSet<CollisionPair>();
+    }
+
     /** Run through all objects to see if they are colliding */
     public void testCollisions()
         {
