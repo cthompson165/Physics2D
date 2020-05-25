@@ -65,9 +65,9 @@ class BroadPhaseCollision2D
         private double getMaxDistanceFromCenter(PhysicalObject2D objCol, int dimension)
         {
             if (dimension == X_DIM)
-                return objCol.getShape().getMaxXDistanceFromCenter();
+                return objCol.getShape().GetMaxXDistanceFromCenter();
             else
-                return objCol.getShape().getMaxYDistanceFromCenter();
+                return objCol.getShape().GetMaxYDistanceFromCenter();
         }
 
         // An EndPoint's position is its object's position plus its offset

@@ -44,7 +44,7 @@ public abstract class MobileObject2D : PhysicalObject2D
      */
     public void setMass(double mass)
         {       
-        massMomentOfInertia = shape.getMassMomentOfInertia(mass);
+        massMomentOfInertia = shape.GetMassMomentOfInertia(mass);
                 
         double massMomentOfInertiaInverse;
         if (massMomentOfInertia > 0)
@@ -112,7 +112,7 @@ public abstract class MobileObject2D : PhysicalObject2D
         {
         this.shape = shape;
         this.shape.setIndex(this.getIndex());
-        this.shape.calcMaxDistances(true);
+        this.shape.CalcMaxDistances(true);
         setMass(mass);
         }
         

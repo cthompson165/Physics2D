@@ -31,7 +31,7 @@ public abstract class StationaryObject2D : PhysicalObject2D
         {
         this.shape = shape;
         this.shape.setIndex(this.getIndex());
-        this.shape.calcMaxDistances(false);
+        this.shape.CalcMaxDistances(false);
         }
         
     /** Returns the velocity of the object. Since this is a stationary

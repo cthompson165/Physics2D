@@ -26,7 +26,7 @@ public class Circle : Shape
         }
         
     /** Calculates the mass moment of inertia for a circle based on its mass */
-    public override double getMassMomentOfInertia(double mass)
+    public override double GetMassMomentOfInertia(double mass)
         {
         return mass * radius * radius / 2;
         }
@@ -58,17 +58,17 @@ public class Circle : Shape
     /** Calculate the max distance a point can be from the center of the object.
         For polygons, this can be different if the object is moving (rotating).
         For circles, this is alway the same. */
-    public override void calcMaxDistances(bool mobile)
+    public override void CalcMaxDistances(bool mobile)
         {
         // stationary and mobile circles have the same max distances
         }
 
-    public override double getMaxXDistanceFromCenter()
+    public override double GetMaxXDistanceFromCenter()
         {
         return this.radius;
         }
 
-    public override double getMaxYDistanceFromCenter()
+    public override double GetMaxYDistanceFromCenter()
         {
         return this.radius;
         }

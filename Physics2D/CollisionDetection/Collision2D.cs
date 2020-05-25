@@ -145,7 +145,7 @@ public class Collision2D
                 if (pair.c1 is StationaryObject2D)
                     {
                     Polygon sav = (Polygon)pair.c2.getShape();
-                    Circle circ = new Circle(Math.Max(sav.getMaxXDistanceFromCenter(), sav.getMaxYDistanceFromCenter()));
+                    Circle circ = new Circle(Math.Max(sav.GetMaxXDistanceFromCenter(), sav.GetMaxYDistanceFromCenter()));
                     ((MobileObject2D)pair.c2).setShape(circ, ((MobileObject2D)pair.c2).getMass());
                                         
                     result = testPolyCircle(pair, true);
@@ -159,7 +159,7 @@ public class Collision2D
                 else if (pair.c2 is StationaryObject2D)
                     {
                     Polygon sav = (Polygon)pair.c1.getShape();
-                    Circle circ = new Circle(Math.Max(sav.getMaxXDistanceFromCenter(), sav.getMaxYDistanceFromCenter()));
+                    Circle circ = new Circle(Math.Max(sav.GetMaxXDistanceFromCenter(), sav.GetMaxYDistanceFromCenter()));
                     ((MobileObject2D)pair.c1).setShape(circ, ((MobileObject2D)pair.c1).getMass());
                                         
                     result = testPolyCircle(pair, true);
@@ -274,14 +274,14 @@ public class Collision2D
         Polygon shapePoly2 = (Polygon)collidePoly2.getShape();
 
         // Get the vertices and edges of the polygons
-        Double2D[] vertices1 = shapePoly1.getVertices();
-        Double2D[] vertices2 = shapePoly2.getVertices();
+        Double2D[] vertices1 = shapePoly1.GetVertices();
+        Double2D[] vertices2 = shapePoly2.GetVertices();
                 
-        Double2D[] edges1 = shapePoly1.getEdges();
-        Double2D[] edges2 = shapePoly2.getEdges();
+        Double2D[] edges1 = shapePoly1.GetEdges();
+        Double2D[] edges2 = shapePoly2.GetEdges();
                 
-        Double2D[] normals1 = shapePoly1.getNormals();
-        Double2D[] normals2 = shapePoly2.getNormals();
+        Double2D[] normals1 = shapePoly1.GetNormals();
+        Double2D[] normals2 = shapePoly2.GetNormals();
                 
         double dist = 0;
         bool foundFeatures = false;
@@ -518,9 +518,9 @@ public class Collision2D
         Circle shapeCircle = (Circle)collideCircle.getShape();
 
         // Get the vertices and edges of the polygons
-        Double2D[] vertices = shapePoly.getVertices();
-        Double2D[] edges = shapePoly.getEdges();
-        Double2D[] normals = shapePoly.getNormals();
+        Double2D[] vertices = shapePoly.GetVertices();
+        Double2D[] edges = shapePoly.GetEdges();
+        Double2D[] normals = shapePoly.GetNormals();
                 
         double dist = 0;
         bool foundFeatures = false;
