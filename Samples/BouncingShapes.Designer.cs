@@ -1,6 +1,6 @@
-﻿namespace PhysicsVisualization
+﻿namespace Samples
 {
-    partial class BouncingBall
+    partial class BouncingShapes
     {
         /// <summary>
         /// Required designer variable.
@@ -40,9 +40,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(258, 254);
+            this.ClientSize = new System.Drawing.Size(449, 359);
             this.Name = "BouncingBall";
-            this.Text = "Form1";
+            this.Text = "Shapes";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.BouncingBall_Paint);
             this.ResumeLayout(false);
 

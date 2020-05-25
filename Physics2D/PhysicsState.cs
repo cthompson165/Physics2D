@@ -157,7 +157,7 @@ public class PhysicsState
      */
     public void setOrientation(Angle orientation, int index)
         {
-        stateVector.vals[index * 3 + 2] = orientation.radians;
+        stateVector.vals[index * 3 + 2] = orientation._radians;
         }
         
     /** Returns an object's orientation 

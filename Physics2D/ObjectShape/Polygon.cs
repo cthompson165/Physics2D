@@ -52,7 +52,7 @@ namespace Physics2D.ObjectShape
                 return verticesCache;
             else
             {
-                DenseMatrix rotTranDenseMatrix = Polygon.RotationTranslationMatrix2D(this.getOrientation().radians, this.getPosition());
+                DenseMatrix rotTranDenseMatrix = Polygon.RotationTranslationMatrix2D(this.getOrientation()._radians, this.getPosition());
                 DenseMatrix rotVertices = rotTranDenseMatrix.times(this._vertices);
                 Double2D[] verts = new Double2D[rotVertices.n];
                 for (int i = 0; i < rotVertices.n; i++)
@@ -75,7 +75,7 @@ namespace Physics2D.ObjectShape
                 return edgesCache;
             else
             {
-                DenseMatrix rotDenseMatrix = Polygon.RotationTranslationMatrix2D(this.getOrientation().radians, new Double2D(0, 0));
+                DenseMatrix rotDenseMatrix = Polygon.RotationTranslationMatrix2D(this.getOrientation()._radians, new Double2D(0, 0));
                 DenseMatrix rotEdges = rotDenseMatrix.times(this._edges);
                 Double2D[] result = new Double2D[rotEdges.n];
                 for (int i = 0; i < rotEdges.n; i++)
@@ -97,7 +97,7 @@ namespace Physics2D.ObjectShape
                 return normalsCache;
             else
             {
-                DenseMatrix rotDenseMatrix = Polygon.RotationTranslationMatrix2D(this.getOrientation().radians, new Double2D(0, 0));
+                DenseMatrix rotDenseMatrix = Polygon.RotationTranslationMatrix2D(this.getOrientation()._radians, new Double2D(0, 0));
                 DenseMatrix rotNormals = rotDenseMatrix.times(this._normals);
                 Double2D[] result = new Double2D[rotNormals.n];
                 for (int i = 0; i < rotNormals.n; i++)

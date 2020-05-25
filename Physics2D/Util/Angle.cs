@@ -6,54 +6,57 @@ using System.Threading.Tasks;
 
 namespace Physics2D.Util
 {
-/** Angle handles adding angles and ensuring that the result never gets
- * above 2PI or below 0. 
- */
-public class Angle
+    /** Angle handles adding angles and ensuring that the result never gets
+     * above 2PI or below 0. 
+     */
+    public class Angle
     {
-    public double radians;
-        
-    // Pre-compute some often used constants
-    public const double twoPI = 2 * Math.PI;
-    public const double halfPI = Math.PI / 2;
+        public double _radians;
 
-    public Angle()
-    {
-        
-    }
+        // Pre-compute some often used constants
+        public const double TWO_PI = 2 * Math.PI;
+        public const double HALF_PI = Math.PI / 2;
 
-    public Angle(double radians)
+        public Angle()
         {
-        this.radians = GetNormalizedRadians(radians);
         }
 
-    /** Adds two angles and makes sure the result doesn't
-     * falls below 0 or above 2 P 
-     */
-    public Angle add(Angle other)
+        public Angle(double radians)
         {
-        return add(other.radians);
+            _radians = GetNormalizedRadians(radians);
         }
 
-    /** Adds two angles and makes sure the result doesn't
-     * falls below 0 or above 2 P 
-     */
-    public Angle add(double radians)
+        public double Degrees
         {
-            double newVal = GetNormalizedRadians(radians + this.radians);
+            get { return _radians * 180 / Math.PI; }
+        }
+
+        /** Adds two angles and makes sure the result doesn't
+         * falls below 0 or above 2 P 
+         */
+        public Angle Add(Angle other)
+        {
+            return Add(other._radians);
+        }
+
+        /** Adds two angles and makes sure the result doesn't
+         * falls below 0 or above 2 P 
+         */
+        public Angle Add(double radians)
+        {
+            double newVal = GetNormalizedRadians(radians + _radians);
             return new Angle(newVal);
         }
 
-    private double GetNormalizedRadians(double radians)
-    {
-        while (radians > twoPI)
-            radians -= twoPI;
+        private double GetNormalizedRadians(double radians)
+        {
+            while (radians > TWO_PI)
+                radians -= TWO_PI;
 
-        while (radians < 0)
-            radians += twoPI;
+            while (radians < 0)
+                radians += TWO_PI;
 
-        return radians;
-    }
-
+            return radians;
+        }
     }
 }

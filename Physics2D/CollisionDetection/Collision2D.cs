@@ -78,7 +78,7 @@ public class Collision2D
     // Test two circles for collision.
     private bool testNarrowPhaseCircleCircle(CollisionPair pair)
         {
-        Double2D ray = pair.c1.getPosition().subtract(pair.c2.getPosition()); 
+        Double2D ray = pair.c1.GetPosition().subtract(pair.c2.GetPosition()); 
         double dist = ray.length();
         double radius1 = ((Circle)pair.c1.getShape()).getRadius();
         double radius2 = ((Circle)pair.c2.getShape()).getRadius();
@@ -90,8 +90,8 @@ public class Collision2D
             pair.relVel = pair.c1.getVelocity().subtract(pair.c2.getVelocity()).dot(pair.normal);
                         
             pair.colPoint2 = pair.normal.multiply(radius2);
-            Double2D globalPoint = pair.colPoint2.add(pair.c2.getPosition());
-            pair.colPoint1 = globalPoint.subtract(pair.c1.getPosition());
+            Double2D globalPoint = pair.colPoint2.add(pair.c2.GetPosition());
+            pair.colPoint1 = globalPoint.subtract(pair.c1.GetPosition());
                         
             if (pair.relVel <= ZERO_VEL) // make sure objects aren't separating
                 collidingList.add(pair);
@@ -364,8 +364,8 @@ public class Collision2D
                                                 
                         // Find the collision points
                         Double2D colPoint = rightVertex.add((leftVertex.subtract(rightVertex)).multiply(0.5));
-                        pair.colPoint1 = colPoint.subtract(collidePoly1.getPosition());
-                        pair.colPoint2 = colPoint.subtract(collidePoly2.getPosition());
+                        pair.colPoint1 = colPoint.subtract(collidePoly1.GetPosition());
+                        pair.colPoint2 = colPoint.subtract(collidePoly2.GetPosition());
                         }
                     }       
                                 
@@ -384,9 +384,9 @@ public class Collision2D
                         pair.closestFeature2 = new int?(curFeat2);
                                                 
                         dist = vertices1[curFeat1].subtract(vertices2[curFeat2]).length();
-                        pair.colPoint1 = vertices1[curFeat1].subtract(collidePoly1.getPosition());
-                        pair.colPoint2 = vertices1[curFeat1].subtract(collidePoly2.getPosition());
-                        pair.normal = ((collidePoly1.getPosition()).subtract(collidePoly2.getPosition())).normalize();
+                        pair.colPoint1 = vertices1[curFeat1].subtract(collidePoly1.GetPosition());
+                        pair.colPoint2 = vertices1[curFeat1].subtract(collidePoly2.GetPosition());
+                        pair.normal = ((collidePoly1.GetPosition()).subtract(collidePoly2.GetPosition())).normalize();
                         }
                     }
                                 
@@ -414,8 +414,8 @@ public class Collision2D
                             pair.closestFeature2 = new int?(curFeat2);
                                                         
                             dist = vertices1[curFeat1].subtract(edgePoint).length();
-                            pair.colPoint1 = vertices1[curFeat1].subtract(collidePoly1.getPosition());
-                            pair.colPoint2 = vertices1[curFeat1].subtract(collidePoly2.getPosition());
+                            pair.colPoint1 = vertices1[curFeat1].subtract(collidePoly1.GetPosition());
+                            pair.colPoint2 = vertices1[curFeat1].subtract(collidePoly2.GetPosition());
                                                         
                             pair.normal = normals2[curFeat2];
                             }
@@ -443,8 +443,8 @@ public class Collision2D
                             pair.closestFeature2 = new int?(curFeat2);
 
                             dist = vertices2[curFeat2].subtract(edgePoint).length();
-                            pair.colPoint1 = vertices2[curFeat2].subtract(collidePoly1.getPosition());
-                            pair.colPoint2 = vertices2[curFeat2].subtract(collidePoly2.getPosition());
+                            pair.colPoint1 = vertices2[curFeat2].subtract(collidePoly1.GetPosition());
+                            pair.colPoint2 = vertices2[curFeat2].subtract(collidePoly2.GetPosition());
                                                         
                             // Normal needs to point from 2 to 1
                             pair.normal = normals1[curFeat1].multiply(-1);
@@ -463,8 +463,8 @@ public class Collision2D
             {       
             // Get the velocities of the collision points
             // vPoint = vBody + angVel * radius rotated by 90 degrees
-            Double2D velPoly1 = collidePoly1.getVelocity().add(pair.colPoint1.rotate(Angle.halfPI).multiply(collidePoly1.getAngularVelocity()));
-            Double2D velPoly2 = collidePoly2.getVelocity().add(pair.colPoint2.rotate(Angle.halfPI).multiply(collidePoly2.getAngularVelocity()));
+            Double2D velPoly1 = collidePoly1.getVelocity().add(pair.colPoint1.rotate(Angle.HALF_PI).multiply(collidePoly1.getAngularVelocity()));
+            Double2D velPoly2 = collidePoly2.getVelocity().add(pair.colPoint2.rotate(Angle.HALF_PI).multiply(collidePoly2.getAngularVelocity()));
 
             // Calculate the relative velocities of the collision points
             Double2D relVel = velPoly1.subtract(velPoly2);
@@ -544,7 +544,7 @@ public class Collision2D
             // VERTEX vs. CIRCLE 
             // The Voronoi region of a vertex falls between the normal to the edge
             // on the left and the normal of the edge on the right
-            if (testVR(vertices[curFeat], normals[prevFeat], normals[curFeat], collideCircle.getPosition(), false))
+            if (testVR(vertices[curFeat], normals[prevFeat], normals[curFeat], collideCircle.GetPosition(), false))
                 {
                 // Found the closest features
                 foundFeatures = true;
@@ -553,18 +553,18 @@ public class Collision2D
                 if (reversed)
                     {
                     // normal should point from circle to poly
-                    pair.normal = vertices[curFeat].subtract(collideCircle.getPosition());
+                    pair.normal = vertices[curFeat].subtract(collideCircle.GetPosition());
                     dist = pair.normal.length();
-                    pair.colPoint1 = vertices[curFeat].subtract(collidePoly.getPosition());
-                    pair.colPoint2 = vertices[curFeat].subtract(collideCircle.getPosition());
+                    pair.colPoint1 = vertices[curFeat].subtract(collidePoly.GetPosition());
+                    pair.colPoint2 = vertices[curFeat].subtract(collideCircle.GetPosition());
                     }
                 else
                     {
                     // normal should point from poly to circle
-                    pair.normal = collideCircle.getPosition().subtract(vertices[curFeat]);
+                    pair.normal = collideCircle.GetPosition().subtract(vertices[curFeat]);
                     dist = pair.normal.length();
-                    pair.colPoint2 = vertices[curFeat].subtract(collidePoly.getPosition());
-                    pair.colPoint1 = vertices[curFeat].subtract(collideCircle.getPosition());
+                    pair.colPoint2 = vertices[curFeat].subtract(collidePoly.GetPosition());
+                    pair.colPoint1 = vertices[curFeat].subtract(collideCircle.GetPosition());
                     }
                 }
                                 
@@ -576,29 +576,29 @@ public class Collision2D
                 // Find the point on edge2 that is closest to vertex1
                 // by getting a vector from vertex2 to vertex1
                 // and projecting it onto edge2
-                Double2D vecOther = collideCircle.getPosition().subtract(vertices[curFeat]);
+                Double2D vecOther = collideCircle.GetPosition().subtract(vertices[curFeat]);
                 double proj = vecOther.dot(edges[curFeat]);
                 Double2D edgePoint = vertices[curFeat].add(edges[curFeat].multiply(proj));
                                 
                 // Now see if the circle lies in the edge's VR
-                if (testVR(vertices[curFeat], normals[curFeat], edges[curFeat], collideCircle.getPosition(), true)
-                    && testVR(vertices[nextFeat], edges[curFeat].multiply(-1), normals[curFeat], collideCircle.getPosition(), true))
+                if (testVR(vertices[curFeat], normals[curFeat], edges[curFeat], collideCircle.GetPosition(), true)
+                    && testVR(vertices[nextFeat], edges[curFeat].multiply(-1), normals[curFeat], collideCircle.GetPosition(), true))
                     {
                     foundFeatures = true;
                     pair.closestFeature1 = new int?(curFeat);
                                         
-                    dist = collideCircle.getPosition().subtract(edgePoint).length();
+                    dist = collideCircle.GetPosition().subtract(edgePoint).length();
                                         
                     if (reversed)
                         {
-                        pair.colPoint1 = edgePoint.subtract(collidePoly.getPosition());
-                        pair.colPoint2 = edgePoint.subtract(collideCircle.getPosition());
+                        pair.colPoint1 = edgePoint.subtract(collidePoly.GetPosition());
+                        pair.colPoint2 = edgePoint.subtract(collideCircle.GetPosition());
                         pair.normal = new Double2D(-normals[curFeat].x, -normals[curFeat].y);
                         }
                     else
                         {
-                        pair.colPoint2 = edgePoint.subtract(collidePoly.getPosition());
-                        pair.colPoint1 = edgePoint.subtract(collideCircle.getPosition());
+                        pair.colPoint2 = edgePoint.subtract(collidePoly.GetPosition());
+                        pair.colPoint1 = edgePoint.subtract(collideCircle.GetPosition());
                         pair.normal = normals[curFeat];
                         }
                     }
@@ -611,7 +611,7 @@ public class Collision2D
             {
             // Get the velocities of the collision points
             // vPoint = vBody + angVel * radius rotated by 90 degrees
-            Double2D velPoly = collidePoly.getVelocity().add(pair.colPoint1.rotate(Angle.halfPI).multiply(collidePoly.getAngularVelocity()));
+            Double2D velPoly = collidePoly.getVelocity().add(pair.colPoint1.rotate(Angle.HALF_PI).multiply(collidePoly.getAngularVelocity()));
             Double2D velCircle = collideCircle.getVelocity();
 
             // Calculate the relative velocities of the collision points

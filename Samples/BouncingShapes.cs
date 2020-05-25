@@ -2,16 +2,16 @@
 using Physics2D.Util;
 using System.Windows.Forms;
 
-namespace PhysicsVisualization
+namespace Samples
 {
-    public partial class BouncingBall : Form
+    public partial class BouncingShapes : Form
     {
         private PhysicsEngine2D _engine;
         private Ball _ball;
+        private Rod _rod;
         private Room _room;
-        private Wall _wall;
         
-        public BouncingBall()
+        public BouncingShapes()
         {
             InitializeComponent();
             DoubleBuffered = true;
@@ -20,11 +20,14 @@ namespace PhysicsVisualization
             // needed by the objects
             _engine = new PhysicsEngine2D();
 
+            _rod = new Rod(10, 20, new Double2D(100, 100), .78, new Double2D(1, .8));
+            _engine.register(_rod);
+
             _ball = new Ball(5, 40, 10);
             _ball.setVelocity(new Double2D(-1, .8));
             _engine.register(_ball);
 
-            _room = new Room(100, 100, 6);
+            _room = new Room(200, 200, 6);
             foreach(Wall wall in _room.Walls)
                 _engine.register(wall);
 
@@ -36,6 +39,7 @@ namespace PhysicsVisualization
         {
             _ball.Draw(e);
             _room.Draw(e);
+            _rod.Draw(e);
         }
 
         private void FormTimer_Tick(object sender, System.EventArgs e)

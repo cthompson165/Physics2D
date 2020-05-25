@@ -77,10 +77,6 @@
     <Compile Include="PhysicalObject\PhysicalObjectPair.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include=".gitattributes" />
-    <Content Include=".gitignore" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="LICENSE.md" />
     <None Include="README.md" />
   </ItemGroup>

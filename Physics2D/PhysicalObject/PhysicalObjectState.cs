@@ -219,7 +219,7 @@ namespace Physics2D.PhysicalObject
         {
             if (!isRegistered)
                 throw new Exception("Object must be registered");
-            this.setPose(this.getPosition().add(physicsState.getLastVelocity(this.index).multiply(percent)), this.getOrientation().add(physicsState.getLastAngularVelocity(this.index)));
+            this.setPose(this.getPosition().add(physicsState.getLastVelocity(this.index).multiply(percent)), this.getOrientation().Add(physicsState.getLastAngularVelocity(this.index)));
         }
 
         /** Move the object back to its previous location */

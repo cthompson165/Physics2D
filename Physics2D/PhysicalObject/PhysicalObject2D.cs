@@ -65,14 +65,14 @@ namespace Physics2D.PhysicalObject
 
     /** Returns an object's current position
      */
-    public Double2D getPosition()
+    public Double2D GetPosition()
         {
             return m_State.getPosition();
         }
         
     /** Returns an object's current orientation 
      */
-    public Angle getOrientation()
+    public Angle GetOrientation()
         {
             return m_State.getOrientation();
         }

@@ -108,7 +108,7 @@ namespace Physics2D.ObjectShape
             {
                 // Get the max distances from the center for a stationary object
                 // taking into account its orientation
-                DenseMatrix rotated = Polygon.RotationTranslationMatrix2D(this.getOrientation().radians, new Double2D(0, 0)).times(this._vertices);
+                DenseMatrix rotated = Polygon.RotationTranslationMatrix2D(this.getOrientation()._radians, new Double2D(0, 0)).times(this._vertices);
                         
                 _maxXDistanceFromCenter = 0;
                 _maxYDistanceFromCenter = 0;

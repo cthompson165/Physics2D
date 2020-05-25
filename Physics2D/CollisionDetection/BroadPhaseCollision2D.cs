@@ -74,9 +74,9 @@ class BroadPhaseCollision2D
         public double getPos()
         {
             if (dimension == X_DIM)
-                return objCol.getPosition().x + offset;
+                return objCol.GetPosition().x + offset;
             else
-                return objCol.getPosition().y + offset;
+                return objCol.GetPosition().y + offset;
         }
 
         public override string ToString()
