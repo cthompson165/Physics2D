@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Gravity.cs" />
+    <Compile Include="PendulumAnchor.cs" />
     <Compile Include="Ball.cs" />
     <Compile Include="BouncingShapes.cs">
       <SubType>Form</SubType>

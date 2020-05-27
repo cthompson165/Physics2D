@@ -7,23 +7,17 @@ namespace Samples
 {
     public class Rod : MobileObject2D
     {
-        private int _width;
-        private int _height;
-
         public Rod(int width, int height, Double2D position, double orientation, Double2D velocity)
         {
-            _width = width;
-            _height = height;
-
             // initial position and velocity
-            setVelocity(velocity);
+            SetVelocity(velocity);
             setPose(position, new Angle(orientation));
 
             // shape - determines how the object will look and how collision detection is done
-            setShape(new Physics2D.ObjectShape.Rectangle(width, height), width * height);
+            SetShape(new Physics2D.ObjectShape.Rectangle(width, height), width * height);
 
             // physical properties
-            setCoefficientOfFriction(0);
+            SetCoefficientOfFriction(0);
             setCoefficientOfRestitution(1);
         }
 

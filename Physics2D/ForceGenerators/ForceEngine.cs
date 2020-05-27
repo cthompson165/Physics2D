@@ -100,7 +100,7 @@ public class ForceEngine
 
     private void addForceField(MobileObject2D objMO)
         {
-        objMO.addForce(forceFields);
+        objMO.AddForce(forceFields);
         }
         
     /** Causes all force generators that are registered with the 
@@ -121,7 +121,7 @@ public class ForceEngine
             {
             MobileObject2D mobj = (MobileObject2D)mobileObjs.objs[i]; 
             addForceField(mobj);
-            mobj.addFrictionForce();
+            mobj.AddFrictionForce();
             }
                 
         /*

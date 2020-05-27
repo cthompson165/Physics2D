@@ -110,13 +110,13 @@ namespace Physics2D.PhysicalObject
         }
         
     // Member functions that vary between mobile and stationary objects
-    abstract public Double2D getVelocity();
+    abstract public Double2D GetVelocity();
         
     /** How fast the object is rotating in radians per second.
      * A positive angular velocity means the object is rotating
      * counter clockwise
      */
-    abstract public double getAngularVelocity();
+    abstract public double GetAngularVelocity();
         
     /** Provides a default implementation for the function used by the collision 
      * detection engine to notify an object when it has collided with another object. 
@@ -129,10 +129,10 @@ namespace Physics2D.PhysicalObject
     /////////////////////////////////////////////////////
     // Abstract functions used by collision detection
     /////////////////////////////////////////////////////
-    abstract public void resetLastPose();
-    abstract public void updatePose(double percent);
+    abstract public void ResetLastPose();
+    abstract public void UpdatePose(double percent);
     abstract public void restorePose();
-    abstract public double getMassInverse();
-    abstract public double getMassMomentOfInertiaInverse();
+    abstract public double GetMassInverse();
+    abstract public double GetMassMomentOfInertiaInverse();
     }
 }

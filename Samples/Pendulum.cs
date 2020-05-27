@@ -1,4 +1,5 @@
 ﻿using Physics2D;
+using Physics2D.Constraint;
 using Physics2D.Util;
 using System;
 using System.Windows.Forms;
@@ -9,7 +10,7 @@ namespace Samples
     {
         private PhysicsEngine2D _engine;
         private Rod _rod;
-        private Room _room;
+        private PendulumAnchor _anchor;
         
         public Pendulum()
         {
@@ -20,12 +21,18 @@ namespace Samples
             // needed by the objects
             _engine = new PhysicsEngine2D();
 
-            _rod = new Rod(10, 20, new Double2D(100, 100), .78, new Double2D(1, .8));
+            _anchor = new PendulumAnchor(new Double2D(100, 50), 5);
+            _engine.register(_anchor);
+
+            _rod = new Rod(20, 5, new Double2D(80, 50), 0, new Double2D(0, 0));
             _engine.register(_rod);
 
-            _room = new Room(200, 200, 6);
-            foreach (Wall wall in _room.Walls)
-                _engine.register(wall);
+            var gravity = new Gravity();
+            gravity.Affects(_rod);
+            _engine.register(gravity);
+            
+            PinJoint pj = new PinJoint(new Double2D(100, 50), _anchor, _rod);
+            _engine.register(pj);
 
             FormTimer.Interval = 30;
             FormTimer.Start();
@@ -34,7 +41,7 @@ namespace Samples
         private void Pendulum_Paint(object sender, PaintEventArgs e)
         {
             _rod.Draw(e);
-            _room.Draw(e);
+            _anchor.Draw(e);
         }
 
         private void FormTimer_Tick(object sender, EventArgs e)

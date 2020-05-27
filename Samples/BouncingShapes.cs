@@ -20,11 +20,11 @@ namespace Samples
             // needed by the objects
             _engine = new PhysicsEngine2D();
 
-            _rod = new Rod(10, 20, new Double2D(100, 100), .78, new Double2D(1, .8));
+            _rod = new Rod(10, 30, new Double2D(100, 100), .78, new Double2D(1, .8));
             _engine.register(_rod);
 
-            _ball = new Ball(5, 40, 10);
-            _ball.setVelocity(new Double2D(-1, .8));
+            _ball = new Ball(10, 70, 30);
+            _ball.SetVelocity(new Double2D(-1, .8));
             _engine.register(_ball);
 
             _room = new Room(200, 200, 6);

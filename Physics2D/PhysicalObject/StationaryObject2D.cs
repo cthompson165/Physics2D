@@ -37,7 +37,7 @@ public abstract class StationaryObject2D : PhysicalObject2D
     /** Returns the velocity of the object. Since this is a stationary
      * object, it is always 0.
      */
-    public override Double2D getVelocity()
+    public override Double2D GetVelocity()
         {
         return velocity;
         }
@@ -47,14 +47,14 @@ public abstract class StationaryObject2D : PhysicalObject2D
      * counter clockwise. Since this is a stationary object,
      * it is always 0
      */
-    public override double getAngularVelocity()
+    public override double GetAngularVelocity()
         {
         return 0;
         }
         
     /** 1 / mass. Used in collision response. Because a stationary
      * object's mass is infinite, this always returns 0 */
-    public override double getMassInverse()
+    public override double GetMassInverse()
         {
         // mass of a stationary object is infinite, so inverse is 0
         return 0;
@@ -62,15 +62,15 @@ public abstract class StationaryObject2D : PhysicalObject2D
         
     /** 1 / mass moment of inertia. Used in collision response. Because a stationary
      * object's mass moment of inertia is infinite, this always returns 0 */
-    public override double getMassMomentOfInertiaInverse()
+    public override double GetMassMomentOfInertiaInverse()
         {
         // mass moment of inertia of a stationary object is infinite, so inverse is 0
         return 0;
         }
         
     // Do nothing in these functions since the object doesn't move
-    public override void resetLastPose() { }
-    public override void updatePose(double percent) { }
+    public override void ResetLastPose() { }
+    public override void UpdatePose(double percent) { }
     public override void restorePose() { }
     }
 

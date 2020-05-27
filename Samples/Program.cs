@@ -16,7 +16,7 @@ namespace Samples
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new BouncingShapes());
+            Application.Run(new Pendulum());
         }
     }
 }

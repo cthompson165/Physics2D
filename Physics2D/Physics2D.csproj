@@ -47,6 +47,7 @@
     <Compile Include="Constraint\ConstraintEngine.cs" />
     <Compile Include="Constraint\ForceConstraint.cs" />
     <Compile Include="Constraint\ImpulseConstraint.cs" />
+    <Compile Include="Constraint\PinJoint.cs" />
     <Compile Include="ForceGenerators\ForceEngine.cs" />
     <Compile Include="ForceGenerators\ForceGenerator.cs" />
     <Compile Include="Integrator\ODEEulerSolver.cs" />

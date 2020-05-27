@@ -94,17 +94,17 @@ namespace Physics2D.PhysicalObject
         }
 
         /** Apply a torque to the MobileObject */
-        public virtual void addTorque(double torque)
+        public virtual void AddTorque(double torque)
         {
             physicsState.addExternalTorque(torque, this.index);
         }
 
-        public virtual void addForce(Double2D force)
+        public virtual void AddForce(Double2D force)
         {
             physicsState.addExternalForce(force, index);
         }
 
-        public Double2D getVelocity()
+        public Double2D GetVelocity()
         {
             if (isRegistered)
             {
@@ -117,7 +117,7 @@ namespace Physics2D.PhysicalObject
         }
 
         /** Updates the object's velocity */
-        public void setVelocity(Double2D velocity)
+        public void SetVelocity(Double2D velocity)
         {
             if (isRegistered)
             {
@@ -134,7 +134,7 @@ namespace Physics2D.PhysicalObject
          * A positive angular velocity means the object is rotating
          * counter clockwise
          */
-        public double getAngularVelocity()
+        public double GetAngularVelocity()
         {
             if (isRegistered)
             {
@@ -150,7 +150,7 @@ namespace Physics2D.PhysicalObject
          * A positive angular velocity means the object is rotating
          * counter clockwise
          */
-        public void setAngularVelocity(double angularVelocity)
+        public void SetAngularVelocity(double angularVelocity)
         {
 
             if (isRegistered)
@@ -166,7 +166,7 @@ namespace Physics2D.PhysicalObject
         /** Returns a vector that represents a combination of 
          * all the forces applied to it
          */
-        public Double2D getForceAccumulator()
+        public Double2D GetForceAccumulator()
         {
             if (isRegistered)
                 return physicsState.getExternalForce(index);
@@ -207,7 +207,7 @@ namespace Physics2D.PhysicalObject
         }
 
         /** 1 / massMomentOfInertia. Used in collision response */
-        public double getMassMomentOfInertiaInverse()
+        public double GetMassMomentOfInertiaInverse()
         {
             if (isRegistered)
                 return physicsState.getMassMomentOfInertiaInverse(index);
@@ -223,7 +223,7 @@ namespace Physics2D.PhysicalObject
         }
 
         /** Move the object back to its previous location */
-        public void resetLastPose()
+        public void ResetLastPose()
         {
             if (!isRegistered)
                 throw new Exception("Object must be registered");
@@ -232,7 +232,7 @@ namespace Physics2D.PhysicalObject
         }
 
         /** Restores an object to its current location */
-        public void restorePose()
+        public void RestorePose()
         {
             if (!isRegistered)
                 throw new Exception("Object must be registered");
